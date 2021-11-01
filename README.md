@@ -4,7 +4,7 @@ To get automated builds on your GitHub repo, create the following file:
 
 ```bash
 mkdir -p .github/workflows
-cat > .github/workflows/automated-buid.yaml <<EOF
+cat > .github/workflows/automated-buid.yaml <<"EOF"
 name: Automated Build
 
 on:
