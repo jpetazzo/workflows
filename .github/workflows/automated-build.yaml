@@ -1,0 +1,60 @@
+# Note: this workflow assumes that your github user name = your Docker Hub user name.
+# It will also probably break for GitHub users or repositories with uppercase letters.
+
+name: Automated Build
+
+on:
+  workflow_call:
+    secrets:
+      DOCKER_HUB_TOKEN:
+        required: false
+
+env:
+  DOCKER_BUILDKIT: 1
+
+jobs:
+  push:
+
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push'
+
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - 
+        uses: actions/checkout@v2
+
+      -
+        name: Log into Docker Hub
+        #if: secrets.DOCKER_HUB_TOKEN != ''
+        uses: docker/login-action@v1 
+        with:
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.DOCKER_HUB_TOKEN }}
+
+      -
+        name: Log into GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ github.token }}
+
+      -
+        name: Build image
+        uses: docker/build-push-action@v2
+
+      -
+        name: Push to Docker Hub
+        #if: secrets.DOCKER_HUB_TOKEN != ''
+        uses: docker/build-push-action@v2
+        with:
+          tags: ${{ github.repository }}
+
+      -
+        name: Push to GitHub Container Registry
+        uses: docker/build-push-action@v2
+        with:
+          tags: ghcr.io/${{ github.repository }}
