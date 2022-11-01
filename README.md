@@ -32,6 +32,9 @@ cat > .github/workflows/automated-build.yaml <<"EOF"
 name: Automated Build
 
 on:
+  # workflow_dispatch is optional.
+  # It lets you trigger the workflow manually from GitHub's web UI.
+  workflow_dispatch:
   push:
     branches:
       - main
