@@ -12,6 +12,7 @@ Note that this is very opinionated.
 - It always pushes the resulting images to GHCR.
 - If the GitHub repo is named `foo/bar`, the image on GHCR will be `ghcr.io/foo/bar`.
 - If your GitHub repo has a `DOCKER_HUB_TOKEN` secret, it will push the resulting images to the Docker Hub as well.
+- By default, it uses the Github repo owner as the Docker Hub username, but you can force it using the `DOCKER_HUB_USERNAME` input.
 - When pushing to the Docker Hub, it pushes to `foo/bar` (aka `docker.io/foo/bar`).
 
 Future features might include:
@@ -44,6 +45,8 @@ jobs:
     uses: jpetazzo/workflows/.github/workflows/automated-build.yaml@main
     #secrets:
     #  DOCKER_HUB_TOKEN: ${{ secrets.DOCKER_HUB_TOKEN }}
+    #with:
+    #  DOCKER_HUB_USERNAME: myuser
 EOF
 ```
 
@@ -53,7 +56,7 @@ If you want the images to be pushed to the Docker Hub:
 
 1. Go get a Docker Hub token
 2. Add the token to your repository (https://github.com/{user}/{repo}/settings/secrets/actions/new)
-3. Uncomment the `secrets:` section in your workflow file above, commit, push
+3. Uncomment the `secrets:` section (and possibly the `with:` section) in your workflow file above, commit, push
 
 ## Images using this workflow
 
