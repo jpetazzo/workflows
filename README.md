@@ -8,6 +8,7 @@ Note that this is very opinionated.
 - One GitHub repository = one image. (It doesn't support "monorepo" layouts.)
 - It requires the `Dockerfile` to be at the root of your GitHub repo.
 - It only builds on pushes to the `main` branch.
+- It builds a tagged image (i.e. not `latest`) on a tag push
 - It builds images for linux/amd64, linux/arm64, linux/arm/v7.
 - It always pushes the resulting images to GHCR.
 - If the GitHub repo is named `foo/bar`, the image on GHCR will be `ghcr.io/foo/bar`.
@@ -39,6 +40,8 @@ on:
   push:
     branches:
       - main
+    tags:
+      - '*'
 
 jobs:
   automated-build:
