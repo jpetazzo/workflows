@@ -35,7 +35,7 @@ jobs:
           if [ "${{ secrets.DOCKER_HUB_TOKEN }}" ]; then
             echo PUSH_TO_DOCKER_HUB=yes >> $GITHUB_ENV
             IMAGES="$IMAGES docker.io/${{ github.repository }}"
-            if [ "${{ inputs.DOCKER_HUB_USERNAME}}" ]; then
+            if [ "${{ inputs.DOCKER_HUB_USERNAME }}" ]; then
               echo DOCKER_HUB_USERNAME="${{ inputs.DOCKER_HUB_USERNAME }}" >> $GITHUB_ENV
             else
               echo DOCKER_HUB_USERNAME="${{ github.repository_owner }}" >> $GITHUB_ENV
