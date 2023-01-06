@@ -8,13 +8,17 @@ Note that this is very opinionated.
 - One GitHub repository = one image. (It doesn't support "monorepo" layouts.)
 - It requires the `Dockerfile` to be at the root of your GitHub repo.
 - It only builds on pushes to the `main` branch.
-- It builds a tagged image (i.e. not `latest`) on a tag push
+- It builds a tagged image (i.e. not `latest`) on a tag push, **in additon to `latest`**
 - It builds images for linux/amd64, linux/arm64, linux/arm/v7.
 - It always pushes the resulting images to GHCR.
 - If the GitHub repo is named `foo/bar`, the image on GHCR will be `ghcr.io/foo/bar`.
 - If your GitHub repo has a `DOCKER_HUB_TOKEN` secret, it will push the resulting images to the Docker Hub as well.
 - By default, it uses the Github repo owner as the Docker Hub username, but you can force it using the `DOCKER_HUB_USERNAME` input.
 - When pushing to the Docker Hub, it pushes to `foo/bar` (aka `docker.io/foo/bar`).
+
+This workflow is meant to be called on branch **or** tag push events.
+If you call it on both `branches` and `tags`, `latest` will be built on both the last pushed tag and the last pushed commit 
+(whichever pushed last), and it may be confusing for users.
 
 Future features might include:
 
@@ -40,8 +44,9 @@ on:
   push:
     branches:
       - main
-    tags:
-      - '*'
+    # Or, to build on tag pushes :
+    #tags:
+    #  - '*'
 
 jobs:
   automated-build:
