@@ -47,10 +47,10 @@ jobs:
           fi
           echo 'IMAGES<<EOF' >> $GITHUB_ENV
           for IMAGE in $IMAGES; do
-            if [ "$GITHUB_REF_TYPE" == "tag" ]; then
-              IMAGE=$IMAGE:$GITHUB_REF_NAME
-            fi
             echo $IMAGE >> $GITHUB_ENV
+            if [ "$GITHUB_REF_TYPE" == "tag" ]; then
+              echo $IMAGE:$GITHUB_REF_NAME >> $GITHUB_ENV
+            fi
           done
           echo 'EOF' >> $GITHUB_ENV
 
