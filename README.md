@@ -10,6 +10,7 @@ Note that this is very opinionated.
 - It only builds on pushes to the `main` branch.
 - It builds a tagged image (i.e. not `latest`) on a tag push, **in additon to `latest`**
 - It builds images for linux/amd64, linux/arm64, linux/arm/v7.
+  (You can override this by setting the `PLATFORMS` input in your workflow.)
 - It always pushes the resulting images to GHCR.
 - If the GitHub repo is named `foo/bar`, the image on GHCR will be `ghcr.io/foo/bar`.
 - If your GitHub repo has a `DOCKER_HUB_TOKEN` secret, it will push the resulting images to the Docker Hub as well.
@@ -55,6 +56,7 @@ jobs:
     #  DOCKER_HUB_TOKEN: ${{ secrets.DOCKER_HUB_TOKEN }}
     #with:
     #  DOCKER_HUB_USERNAME: myuser
+    #  PLATFORMS: linux/amd64,linux/arm64
 EOF
 ```
 
