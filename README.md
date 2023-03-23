@@ -31,7 +31,14 @@ Future features might include:
 
 Still interested? Then here is what you need to do!
 
-Just add the following file to your repo:
+First, you need to set workflow permissions accordingly
+(so that the workflow can push the resulting Docker image
+to GHCR). One way to do that is to go to your repository's
+settings, then in `Code and automation` > `Actions` >
+`General`, then in the "Workflow permissions" select
+"Read and write permissions", then save.
+
+Then, add the following file to your repo:
 
 ```bash
 mkdir -p .github/workflows
